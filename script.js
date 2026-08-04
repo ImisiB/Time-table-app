@@ -1,87 +1,64 @@
-function addToStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+let tableBody = document.querySelector("tbody");
+for (let i = 0; i < 12; i++) {
+  let row = document.createElement("tr");
+  for (let j = 0; j < 8; j++) {
+    let cell = document.createElement("td");
+    let button = document.createElement("button");
+    button.classList.add('button')
+    cell.appendChild(button);
+    row.appendChild(cell);
+  }
+  tableBody.appendChild(row);
 }
 
-function getFromStorage(key) {
-  const value = localStorage.getItem(key);
-  return value ? JSON.parse(value) : null;
-}
+let cell = document.querySelectorAll("td");
+  for (let i = 0; i < 97; i++) {
+    let cell = document.createElement("td");
+    cell.setAttribute("table-id", `id${i}`);
+    console.log(cell.getAttribute("table-id"));
+    cell.innerText = localStorage.getItem(`cell-${i}`);
+    cell.value = localStorage.getItem(`cell-${i}`);
+    console.log("cell id", cell.getAttribute("table-id"), "cell value", cell.value);
 
-function removeFromStorage(key) {
-    localStorage.removeItem(key);
-}
-
-function clearStorage() {
-    localStorage.clear();
-}
-
-let saveButton = document.querySelector('.save-button');
-let modalDiv = document.querySelector('.modal-div');
-
-let inputs = document.querySelectorAll('input');
-inputs.forEach(input => {
-    input.addEventListener('focus', function() {
-        modalDiv.classList.add('modalAfter');    
-saveButton.addEventListener('click', function() {
-    let table = document.querySelector('table');
-    let rows = table.querySelectorAll('tr');
-    let data = [];
-    rows.forEach(row => {
-        let rowData = [];
-        let cells = row.querySelectorAll('td, th');
-        cells.forEach(cell => {
-            let input2 = cell.querySelector('input');
-            if (input2) {
-              input.value = document.querySelector('.modal-input').value;
-              rowData.push(input2.value);
-            }
-        });
-        data.push(rowData);
+    cell.addEventListener("click", () => {
+      document.querySelector(".modal-div").classList.add("modalAfter");
+      modalInput = document.querySelector(".modal-input");
+      modalInput.value = localStorage.getItem(`cell-${i}`);
     });
-    modalDiv.classList.remove('modalAfter');
-    addToStorage('tableData', data);
+
+
+
+    let saveButton = document.querySelector(".save-button");
+    saveButton.addEventListener("click", () => {
+      document.querySelector(".modal-div").classList.remove("modalAfter");
+      modalInput = document.querySelector(".modal-input");
+      localStorage.setItem(`cell-${i}`, modalInput.value);
     });
+
+    cell.value = localStorage.getItem(`cell-${i}`);
+    cell.innerText = localStorage.getItem(`cell-${i}`);
+
+  }
+
+let buttons = document.querySelectorAll(".button");
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelector(".modal-div").classList.add("modalAfter");
   });
 });
 
-window.addEventListener('load', function() {
-    let savedData = getFromStorage('tableData');
-    if (savedData) {
-        let table = document.querySelector('table');
-        let rows = table.querySelectorAll('tr');
-        rows.forEach((row, rowIndex) => {
-            let cells = row.querySelectorAll('td, th');
-             cells.forEach((cell, cellIndex) => {
-                let input = cell.querySelector('input');
-                if (input && savedData[rowIndex] && savedData[rowIndex][cellIndex] !== undefined) {
-                    input.value = savedData[rowIndex][cellIndex];
-                }
-            });
-        });
-    }
+// let saveButton = document.querySelector(".save-button");
+// saveButton.addEventListener("click", () => {
+//   document.querySelector(".modal-div").classList.remove("modalAfter");
+//   modalInput = document.querySelector(".modal-input");
+//   localStorage.setItem("cell-96", modalInput.value);
+// });
+let cancelButton = document.querySelector(".cancel-button");
+cancelButton.addEventListener("click", () => {
+  document.querySelector(".modal-div").classList.remove("modalAfter");
 });
 
-let clearButton = document.querySelector('.clear-button');
-clearButton.addEventListener('click', function() {
-    removeFromStorage('tableData');
-    clearStorage();
-    let table = document.querySelector('table');
-    let rows = table.querySelectorAll('tr');
-    rows.forEach(row => {
-        let cells = row.querySelectorAll('td, th');
-        cells.forEach(cell => {
-            let input = cell.querySelector('input');
-            if (input) {
-                input.value = '';
-            }
-        });
-    });
-});
-
-
-
-let cancelButton = document.querySelector('.cancel-button');
-cancelButton.addEventListener('click', () => {
-  document.querySelector('.modal-div').classList.remove('modalAfter');
-});
+window.addEventListener('load', () => {
+  localStorage.getItem("cell-96") === "saved"
+})
 
