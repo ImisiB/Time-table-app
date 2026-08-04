@@ -11,16 +11,17 @@ for (let i = 0; i < 12; i++) {
   tableBody.appendChild(row);
 }
 
-let cell = document.querySelectorAll("td");
+let cells = document.querySelectorAll("td");
   for (let i = 0; i < 97; i++) {
-    let cell = document.createElement("td");
-    cell.setAttribute("table-id", `id${i}`);
-    console.log(cell.getAttribute("table-id"));
-    cell.innerText = localStorage.getItem(`cell-${i}`);
-    cell.value = localStorage.getItem(`cell-${i}`);
-    console.log("cell id", cell.getAttribute("table-id"), "cell value", cell.value);
+    cells.forEach(cell => {
+      cell.setAttribute("cell", `${i}`);
+      cell.innerText = localStorage.getItem(`cell-${i}`);
+    });
+    // let cell = document.createElement("td");
+    // cells[i].innerText = localStorage.getItem(`cell-${i}`);
+    // console.log("cell id", cells[i].getAttribute("cell"), "cell value", cells[i].innerHTML);
 
-    cell.addEventListener("click", () => {
+    cells[i].addEventListener("click", () => {
       document.querySelector(".modal-div").classList.add("modalAfter");
       modalInput = document.querySelector(".modal-input");
       modalInput.value = localStorage.getItem(`cell-${i}`);
@@ -28,17 +29,19 @@ let cell = document.querySelectorAll("td");
 
 
 
+
     let saveButton = document.querySelector(".save-button");
     saveButton.addEventListener("click", () => {
       document.querySelector(".modal-div").classList.remove("modalAfter");
       modalInput = document.querySelector(".modal-input");
-      localStorage.setItem(`cell-${i}`, modalInput.value);
+      localStorage.setItem(`cell-${cells[i].getAttribute("table-id")}`, modalInput.value);
+      cells[i].innerText = localStorage.getItem(`cell-${cells[i].getAttribute("table-id")}`) || `cell-${i}`;
+
     });
-
-    cell.value = localStorage.getItem(`cell-${i}`);
-    cell.innerText = localStorage.getItem(`cell-${i}`);
-
-  }
+    window.addEventListener('load', () => {
+      localStorage.getItem(`cell${i}`) = cells[i].innerText;
+    })
+}
 
 let buttons = document.querySelectorAll(".button");
 buttons.forEach(button => {
@@ -57,8 +60,3 @@ let cancelButton = document.querySelector(".cancel-button");
 cancelButton.addEventListener("click", () => {
   document.querySelector(".modal-div").classList.remove("modalAfter");
 });
-
-window.addEventListener('load', () => {
-  localStorage.getItem("cell-96") === "saved"
-})
-
