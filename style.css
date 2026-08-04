@@ -1,0 +1,89 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  color: rgb(96, 95, 95);
+}
+.header{
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: solid 3px #ccc;
+  font-size: 70px;
+  letter-spacing: 5px;
+  margin-top: 0;
+}
+tr{
+  margin: 0;
+  padding: 0;
+}
+table{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+input{
+  height: 40px;
+}
+.time{
+  font-size: 25px;
+}
+.modal-div{
+  display: none;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal{ 
+  background-color: #fefefe;
+  margin: 25% auto; /* 25% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  position: absolute;
+  text-align: center;
+  justify-content: center;
+}
+.save-button{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.cancel-button{
+  background-color: #f44336; /* Red */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.modalAfter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
