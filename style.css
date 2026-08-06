@@ -28,6 +28,7 @@ input{
 .time{
   font-size: 25px;
 }
+
 .modal-div{
   display: none;
   position: fixed; /* Stay in place */
@@ -90,6 +91,7 @@ input{
 .button{
   height: 40px;
   width: 120px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .clear{
   border: none;
@@ -102,3 +104,4 @@ input{
   margin: 4px 2px;
   cursor: pointer; 
 }
+
