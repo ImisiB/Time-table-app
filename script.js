@@ -13,45 +13,69 @@ for (let i = 0; i < 12; i++) {
 
 let cells = document.querySelectorAll("td");
 let clearButton = document.querySelector('.clear')
+let clearModal = document.querySelector('.clearModal-div')
+let yesButton = document.querySelector('.yesButton')
+let noButton = document.querySelector('.noButton')
 
 clearButton.addEventListener('click',() => {
-  localStorage.clear();
-  cells.forEach((cell) => {
-    if (cell.getAttribute('index') === '0') {
-      return;
-    } else if (cell.getAttribute('index') === '8') {
-      return
-    } else if (cell.getAttribute('index') === '16') {
-      return
-    } else if (cell.getAttribute('index') === '24') {
-      return
-    } else if (cell.getAttribute('index') === '32') {
-      return
-    } else if (cell.getAttribute('index') === '40') {
-      return
-    } else if (cell.getAttribute('index') === '48') {
-      return
-    } else if (cell.getAttribute('index') === '56') {
-      return
-    } else if (cell.getAttribute('index') === '64') {
-      return
-    } else if (cell.getAttribute('index') === '72') {
-      return
-    } else if (cell.getAttribute('index') === '80') {
-      return
-    } else if (cell.getAttribute('index') === '88') {
-      return
-    } else if (cell.getAttribute('index') === '96') {
-      return
-    } else {
-      cell.querySelector('button').innerText = '';
-    };})
+  clearModal.classList.add('clearModalAfter')
+  yesButton.addEventListener('click', () => {
+    localStorage.clear();
+    cells.forEach((cell) => {
+      if (cell.getAttribute('index') === '0') {
+        return;
+      } else if (cell.getAttribute('index') === '8') {
+        return
+      } else if (cell.getAttribute('index') === '16') {
+        return
+      } else if (cell.getAttribute('index') === '24') {
+        return
+      } else if (cell.getAttribute('index') === '32') {
+        return
+      } else if (cell.getAttribute('index') === '40') {
+        return
+      } else if (cell.getAttribute('index') === '48') {
+        return
+      } else if (cell.getAttribute('index') === '56') {
+        return
+      } else if (cell.getAttribute('index') === '64') {
+        return
+      } else if (cell.getAttribute('index') === '72') {
+        return
+      } else if (cell.getAttribute('index') === '80') {
+        return
+      } else if (cell.getAttribute('index') === '88') {
+        return
+      } else if (cell.getAttribute('index') === '96') {
+        return
+      } else {
+        cell.querySelector('button').innerText = '';
+      };})
+    localStorage.setItem('cell-0', '6:00am - 7:00am')
+    localStorage.setItem('cell-8', '7:00am - 8:00am')
+    localStorage.setItem('cell-16', '8:00am - 9:00am')
+    localStorage.setItem('cell-24', '9:00am - 10:00am')
+    localStorage.setItem('cell-32', '10:00am - 11:00am')
+    localStorage.setItem('cell-40', '11:00am - 12:00pm')
+    localStorage.setItem('cell-48', '12:00pm - 1:00pm')
+    localStorage.setItem('cell-56', '1:00pm - 2:00pm')
+    localStorage.setItem('cell-64', '2:00pm - 3:00pm')
+    localStorage.setItem('cell-72', '3:00pm - 4:00pm')
+    localStorage.setItem('cell-80', '4:00pm - 5:00pm')
+    localStorage.setItem('cell-88', '5:00pm - 6:00pm')
+
+    clearModal.classList.remove("clearModalAfter");
+  })
+  noButton.addEventListener('click', () => {
+    clearModal.classList.remove("clearModalAfter");
+  })
 });
 
 
 let saveButton = document.querySelector(".save-button");
 let modalDiv = document.querySelector('.modal-div')
 let modalInput = document.querySelector(".modal-input");
+let modalInput2 = document.querySelector(".modal-input2");
 let activeCellIndex = null;
 
 cells.forEach((cell, index) => {
@@ -67,6 +91,7 @@ cells.forEach((cell, index) => {
   btn.addEventListener('click', () => {
     let indexArray = [0,8,16,24,32,40,48,56,64,72,80,88,96]
     activeCellIndex = index;
+    modalInput2.value = localStorage.getItem(`cell-${index}`)
     modalInput.value = localStorage.getItem(`cell-${index}`) || ''
     modalDiv.classList.add('modalAfter')
     
@@ -80,25 +105,27 @@ cells.forEach((cell, index) => {
     }}
 })
 });
+
 localStorage.setItem('cell-0', '6:00am - 7:00am')
 localStorage.setItem('cell-8', '7:00am - 8:00am')
 localStorage.setItem('cell-16', '8:00am - 9:00am')
-localStorage.setItem('cell-24', '10:00am - 11:00am')
-localStorage.setItem('cell-32', '11:00am - 12:00pm')
-localStorage.setItem('cell-40', '12:00pm - 1:00pm')
-localStorage.setItem('cell-48', '2:00pm - 3:00pm')
-localStorage.setItem('cell-56', '3:00pm - 4:00pm')
-localStorage.setItem('cell-64', '5:30pm - :6:00pm')
-localStorage.setItem('cell-72', '7:00pm - 8:00pm')
-localStorage.setItem('cell-80', '9:00pm - 10:00pm')
-localStorage.setItem('cell-88', '10:00pm - 11:00pm')
-localStorage.setItem('cell-96', '11:00pm - 12:00pm')
-
+localStorage.setItem('cell-24', '9:00am - 10:00am')
+localStorage.setItem('cell-32', '10:00am - 11:00am')
+localStorage.setItem('cell-40', '11:00am - 12:00pm')
+localStorage.setItem('cell-48', '12:00pm - 1:00pm')
+localStorage.setItem('cell-56', '1:00pm - 2:00pm')
+localStorage.setItem('cell-64', '2:00pm - 3:00pm')
+localStorage.setItem('cell-72', '3:00pm - 4:00pm')
+localStorage.setItem('cell-80', '4:00pm - 5:00pm')
+localStorage.setItem('cell-88', '5:00pm - 6:00pm')
 
 
 saveButton.addEventListener("click", () => {
   if(activeCellIndex != null) {
     let newValue = modalInput.value
+    if(modalInput2.value !== '') {
+      newValue += ', by: ' + modalInput2.value
+    }
 
     localStorage.setItem(`cell-${activeCellIndex}`, newValue)
   
@@ -122,17 +149,15 @@ cancelButton.addEventListener("click", () => {
 
 window.addEventListener('load', () => {
   localStorage.setItem('cell-0', '6:00am - 7:00am')
-localStorage.setItem('cell-8', '7:00am - 8:00am')
-localStorage.setItem('cell-16', '8:00am - 9:00am')
-localStorage.setItem('cell-24', '10:00am - 11:00am')
-localStorage.setItem('cell-32', '11:00am - 12:00pm')
-localStorage.setItem('cell-40', '12:00pm - 1:00pm')
-localStorage.setItem('cell-48', '2:00pm - 3:00pm')
-localStorage.setItem('cell-56', '3:00pm - 4:00pm')
-localStorage.setItem('cell-64', '5:30pm - :6:00pm')
-localStorage.setItem('cell-72', '7:00pm - 8:00pm')
-localStorage.setItem('cell-80', '9:00pm - 10:00pm')
-localStorage.setItem('cell-88', '10:00pm - 11:00pm')
-localStorage.setItem('cell-96', '11:00pm - 12:00pm')
-
+  localStorage.setItem('cell-8', '7:00am - 8:00am')
+  localStorage.setItem('cell-16', '8:00am - 9:00am')
+  localStorage.setItem('cell-24', '9:00am - 10:00am')
+  localStorage.setItem('cell-32', '10:00am - 11:00am')
+  localStorage.setItem('cell-40', '11:00am - 12:00pm')
+  localStorage.setItem('cell-48', '12:00pm - 1:00pm')
+  localStorage.setItem('cell-56', '1:00pm - 2:00pm')
+  localStorage.setItem('cell-64', '2:00pm - 3:00pm')
+  localStorage.setItem('cell-72', '3:00pm - 4:00pm')
+  localStorage.setItem('cell-80', '4:00pm - 5:00pm')
+  localStorage.setItem('cell-88', '5:00pm - 6:00pm')
 })
